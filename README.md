@@ -30,7 +30,7 @@ Example Playbook
 ----------------
 
 A host running the authorative server on interface eth1 using postgresql listening on 127.0.0.1:
-
+```yaml
 - hosts: dev-powerdns-01
   become: true
   vars:
@@ -41,16 +41,16 @@ A host running the authorative server on interface eth1 using postgresql listeni
   roles:
     - { role: alpine_postgresql }
     - { role: alpine_powerdns, pdns_authoritive: true, pdns_postgresql: true, pdns_auth_listen_addr: "{{ ansible_eth1.ipv4.address }}" }
-
-A host running the recursor that uses 10.0.0.11 to resolve thee powerdns.net zone:
-
+```
+A host running the recursor that uses 10.0.0.11 to resolve the powerdns.net zone:
+```yaml
 - hosts: dev-powerdns-02
   become: true
   roles:
     - { role: alpine_powerdns, pdns_recursor: true, pdns_recursor_listen_addr: "{{ ansible_eth1.ipv4.address }}", pdns_recursor_forward_zones: "powerdns.net=10.0.0.11" }
-
+```
 A host running both authorative (on 127.0.0.1) and recursor (on eth1) using posgresql running on the same host:
-
+```yaml
 - hosts: dev-powerdns-03
   become: true
   vars:
@@ -61,7 +61,7 @@ A host running both authorative (on 127.0.0.1) and recursor (on eth1) using posg
   roles:
     - { role: alpine_postgresql }
     - { role: alpine_powerdns, pdns_recursor: true, pdns_authoritive: true, pdns_postgresql: true, pdns_recursor_listen_addr: "{{ ansible_eth1.ipv4.address }}", pdns_auth_listen_addr: 127.0.0.1, pdns_recursor_forward_zones: "powerdns.net=127.0.0.1" }
-...
+```
 
 License
 -------
