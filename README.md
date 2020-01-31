@@ -1,12 +1,12 @@
 Role Name
 =========
 
-Configure PowerDNS (authoritive and/or recursor)  on Apline Linux
+Configure PowerDNS 4.2 (authoritive and/or recursor) on 3.11 Apline Linux
 
 Requirements
 ------------
 
-A connection to a postgresql database for the authoritive server. Use alainvanhoof/alpine_postgresql for example
+A connection to a postgresql database for the authoritive server. Use alainvanhoof/alpine_postgresql for example of a postgresql on Alpine
 
 Role Variables
 --------------
