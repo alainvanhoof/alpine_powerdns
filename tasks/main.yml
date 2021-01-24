@@ -5,32 +5,32 @@
   apk:
     name: pdns-recursor
     state: present
-    update_cache: yes
+    update_cache: true
   when: pdns_recursor is defined
 
 - name: Install PowerDNS authoritive server
   apk:
     name: pdns
     state: present
-    update_cache: yes
+    update_cache: true
   when: pdns_authoritive is defined
 
 - name: Install PowerDNS PostgreSQL backend
   apk:
     name: pdns-backend-pgsql
     state: present
-    update_cache: yes
+    update_cache: true
   when:
-     - pdns_authoritive is defined
-     - pdns_postgresql is defined
+    - pdns_authoritive is defined
+    - pdns_postgresql is defined
 
 - name: Configure PowerDNS authoritive
   template:
     src: pdns.postgresql.conf.j2
     dest: /etc/pdns/pdns.conf
   when:
-     - pdns_authoritive is defined
-     - pdns_postgresql is defined
+    - pdns_authoritive is defined
+    - pdns_postgresql is defined
   notify: Reload pdns
 
 - name: Copy PowerDNS Table setup
@@ -38,16 +38,16 @@
     src: powerdns.sql.j2
     dest: /var/lib/postgresql/powerdns.sql
   when:
-     - pdns_authoritive is defined
-     - pdns_postgresql is defined
+    - pdns_authoritive is defined
+    - pdns_postgresql is defined
 
 - name: Create PowerDNS Tables
   shell: su postgres -c "psql {{ pg_db_name }} < /var/lib/postgresql/powerdns.sql && touch /var/lib/postgresql/powerdns.sql.executed"
   args:
     creates: /var/lib/postgresql/powerdns.sql.executed
   when:
-     - pdns_authoritive is defined
-     - pdns_postgresql is defined
+    - pdns_authoritive is defined
+    - pdns_postgresql is defined
 
 - name: Configure PowerDNS recursor
   template:
