@@ -20,7 +20,7 @@
     name: pdns-backend-pgsql
     state: present
     update_cache: yes
-  when: 
+  when:
      - pdns_authoritive is defined
      - pdns_postgresql is defined
 
@@ -28,7 +28,7 @@
   template:
     src: pdns.postgresql.conf.j2
     dest: /etc/pdns/pdns.conf
-  when: 
+  when:
      - pdns_authoritive is defined
      - pdns_postgresql is defined
   notify: Reload pdns
@@ -37,15 +37,15 @@
   template:
     src: powerdns.sql.j2
     dest: /var/lib/postgresql/powerdns.sql
-  when: 
+  when:
      - pdns_authoritive is defined
      - pdns_postgresql is defined
 
-- name: Create PowerDNS Tables 
-  shell: su postgres -c "psql {{ pg_db_name }} < /var/lib/postgresql/powerdns.sql && touch /var/lib/postgresql/powerdns.sql.executed" 
+- name: Create PowerDNS Tables
+  shell: su postgres -c "psql {{ pg_db_name }} < /var/lib/postgresql/powerdns.sql && touch /var/lib/postgresql/powerdns.sql.executed"
   args:
     creates: /var/lib/postgresql/powerdns.sql.executed
-  when: 
+  when:
      - pdns_authoritive is defined
      - pdns_postgresql is defined
 

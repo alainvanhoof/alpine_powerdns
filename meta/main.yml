@@ -1,7 +1,7 @@
 galaxy_info:
   author: Alain van Hoof
   description: PowerDNS for Alpine Linux
-  license: license (GPLv2, CC-BY, etc)
+  license: GPL
   min_ansible_version: 2.0
   platforms:
     - name: Alpine
